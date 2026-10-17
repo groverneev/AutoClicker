@@ -8,8 +8,14 @@ struct AutoClickerApp: App {
     var body: some Scene {
         Window("Auto Clicker", id: "main") {
             ContentView(model: model)
-                .background(WindowAccessor { model.attach(window: $0) })
+                .background(WindowAccessor { window in
+                    window.isMovableByWindowBackground = true
+                    // Don't open with the first number field focused and its text selected.
+                    DispatchQueue.main.async { window.makeFirstResponder(nil) }
+                    model.attach(window: window)
+                })
         }
+        .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentSize)
     }
 }

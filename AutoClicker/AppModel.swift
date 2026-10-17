@@ -38,13 +38,6 @@ final class AppModel {
         watchAccessibilityPermission()
     }
 
-    var statusText: String {
-        if isRunning {
-            return clickCount > 0 ? "Clicking… (\(clickCount))" : "Clicking…"
-        }
-        return clickCount > 0 ? "Stopped (\(clickCount))" : "Ready"
-    }
-
     // MARK: - Start / stop
 
     func toggle() {

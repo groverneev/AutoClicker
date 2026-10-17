@@ -14,12 +14,17 @@ struct Hotkey: Codable, Equatable {
     )
 
     var displayString: String {
-        var result = ""
-        if carbonModifiers & UInt32(controlKey) != 0 { result += "⌃" }
-        if carbonModifiers & UInt32(optionKey) != 0 { result += "⌥" }
-        if carbonModifiers & UInt32(shiftKey) != 0 { result += "⇧" }
-        if carbonModifiers & UInt32(cmdKey) != 0 { result += "⌘" }
-        return result + keyLabel
+        displayKeys.joined()
+    }
+
+    /// Modifier symbols in the standard macOS order, followed by the key.
+    var displayKeys: [String] {
+        var keys: [String] = []
+        if carbonModifiers & UInt32(controlKey) != 0 { keys.append("⌃") }
+        if carbonModifiers & UInt32(optionKey) != 0 { keys.append("⌥") }
+        if carbonModifiers & UInt32(shiftKey) != 0 { keys.append("⇧") }
+        if carbonModifiers & UInt32(cmdKey) != 0 { keys.append("⌘") }
+        return keys + [keyLabel]
     }
 
     /// Builds a hotkey from a key-down event, or returns `nil` if the combination isn't usable
